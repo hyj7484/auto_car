@@ -1,22 +1,25 @@
 import cv2
+import numpy as np
 
 import lidar.lidar as lidar
-import objectSearch.imgSearch as imgS
-import csiCam
+import objectDetection.inference_detection as detection
+import csiCam as csi
 
 if __name__ == "__main__" :
     # lidar
-    ret = laser.initialize()
+    ret = lidar.laser.initialize()
     if ret :
         ret = lidar.laser.turnOn()
         scan = lidar.ydlidar.LaserScan()
-    # video capture
-    capture = csiCam.show_camera()
+
+    # camera
+    detection.init()
+    cap = csi.show_camera()
+
+    angle, range = [], []
     while cv2.waitKey(33) < 0 :
-        # lidar
-        if ret and ydlidar.os_isOk() :
-            angle, range = lidar.playLidar_While(scan)
-        # obejct Search
-        ret1, frame = capture.read()
-        if ret1 :
-            imgS.searchImg(frame, weights='./yolo/yolov2-tiny.weights', cfg='./yolo/yolov2-tiny.cfg', coco='./yolo/coco.names')
+        if ret and lidar.ydlidar.os_isOk() :
+            angle, range = lidar.playLidar(scan)
+        ret_cap, img = cap.read()
+        detection, detectImg = detection.getDetections(img)
+        cv2.imshow('img', detectImg)

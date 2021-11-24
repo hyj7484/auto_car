@@ -18,16 +18,13 @@ laser.setlidaropt(ydlidar.LidarPropScanFrequency, 10.0);
 laser.setlidaropt(ydlidar.LidarPropSampleRate, 20);
 laser.setlidaropt(ydlidar.LidarPropSingleChannel, False);
 
-angle, range = [], []
-
 def playLidar_start() :
-    global angle, range
     ret = laser.initialize()
     if ret :
         ret = laser.turnOn()
         scan = ydlidar.LaserScan()
         while ret and ydlidar.os_isOk() :
-            angle, range = playLidar_While(scan)
+            angle, range = playLidar(scan)
 
 
 def playLidar(scan) :

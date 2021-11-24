@@ -21,17 +21,14 @@ def color_check(img) :
         print(value)
         if 255 in value :
             value_index = np.where(value == 255)
-            print(value_index, 'index ?')
             if Max < count[value_index] :
-                print("??")
                 Max = count[value_index]
-                print(Max)
                 index = i
     if Max <= 0 :
         return "none"
     text = 'color img' + str(count)
     print(index)
-    cv2.imshow(text, img)
+    cv2.imshow('color', img)
     cv2.imshow(c[index], rs[index])
     return c[index]
 
@@ -89,6 +86,7 @@ def searchImg(img) :
 
     copyImg = img.copy()
     # view prt text and lines
+    color_check(img)
     for i in range(len(boxes)):
         if i in indexes:
             x, y, w, h = boxes[i]
@@ -96,6 +94,8 @@ def searchImg(img) :
             color = colors[i]
             if label == 'traffic light' :
                 copy = copyImg[y:y+h+h, x:x+w]
+            print('color')
+            print(color)
             cv2.rectangle(img, (x, y), (x + w, y + h), color, 4)
             count+=1
             text = label + str(count)
@@ -103,11 +103,12 @@ def searchImg(img) :
     cv2.imshow('img', img)
 
 if __name__ == "__main__" :
-    video = cv2.VideoCapture(0)
+    video = cv2.VideoCapture('./video/light1.mp4')
     prev_time = 0
-    FPS = 3
+    FPS = 30
     while cv2.waitKey(33) < 0 :
         ret, frame = video.read()
+        frame = frame[300:700, 800:1300].copy()
         current_time = time.time() - prev_time
         if ret and current_time > 1. / FPS :
             prev_time = time.time()

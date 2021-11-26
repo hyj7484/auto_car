@@ -132,7 +132,7 @@ def colorSearch(img) :
     #     print(colors[colorIndex])
 
 if __name__ == "__main__" :
-    cap = cv2.VideoCapture('./video/light3.mp4')
+    cap = cv2.VideoCapture('./video/light2.mp4')
     while cv2.waitKey(33) < 0 :
         ret, frame = cap.read()
         frame = cv2.resize(frame, dsize=(640, 480), interpolation=cv2.INTER_AREA)

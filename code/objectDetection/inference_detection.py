@@ -1,8 +1,5 @@
 import jetson.inference as inference
 import jetson.utils as utils
-import cv2
-import numpy as np
-import time as t
 
 net = None
 

@@ -6,7 +6,7 @@ import objectDetection.inference_detection as detection
 import csiCam as csi
 
 if __name__ == "__main__" :
-    # lidar
+    # lidarㅣ
     ret = lidar.laser.initialize()
     if ret :
         ret = lidar.laser.turnOn()
